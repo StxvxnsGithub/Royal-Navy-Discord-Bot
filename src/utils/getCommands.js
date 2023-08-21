@@ -6,8 +6,8 @@ module.exports = () => {
     const commandsFolderPath = path.join(__dirname, "..", "commands");
     const commandFolders = fs.readdirSync(commandsFolderPath);
 
-    for (const folder of commandFolders) {
-        const commandPath = path.join(commandsFolderPath, folder);
+    for (const commandFolder of commandFolders) {
+        const commandPath = path.join(commandsFolderPath, commandFolder);
         const commandFiles = fs
             .readdirSync(commandPath)
             .filter((file) => file.endsWith(".js"));
