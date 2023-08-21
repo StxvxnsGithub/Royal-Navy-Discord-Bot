@@ -1,5 +1,3 @@
-const fs = require("node:fs");
-const path = require("node:path");
 const getCommands = require("../utils/getCommands");
 const { REST, Routes } = require("discord.js"); // Requires the necessary discord.js classes
 const { token, clientID, testGuildID } = require("../../config.json"); // Requires the config.json file storing important data
