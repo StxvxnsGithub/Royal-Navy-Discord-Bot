@@ -11,27 +11,25 @@ module.exports = {
         );
 
         if (!command) {
-            console.error(
-                `Command Fetch ERROR: ${interaction.commandName} was not found.`
-            );
+            console.error(`${interaction.commandName} Fetch ERROR: not found.`);
             return;
         }
 
         try {
             await command.execute(interaction);
         } catch (error) {
-            console.error(`Command Execution ERROR: ${error}`);
+            console.error(
+                `${interaction.commandName} Execution ERROR: ${error}`
+            );
 
             if (interaction.replied || interaction.deferred) {
                 await interaction.followUp({
-                    content:
-                        "An error occured while attempting to execute this command.",
+                    content: `An error occured while attempting to execute this command.`,
                     ephemeral: true,
                 });
             } else {
                 await interaction.reply({
-                    content:
-                        "An error occured while attempting to execute this command.",
+                    content: `An error occured while attempting to execute this command.`,
                     ephemeral: true,
                 });
             }
