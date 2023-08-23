@@ -129,7 +129,9 @@ module.exports = {
             } else if (fieldTitle) {
                 embedMessage.addFields({ name: fieldTitle, value: " " });
             } else if (fieldText) {
-                embedMessage.addFields({ name: " ", value: fieldTextLines[0] });
+                const embedFields = splitFieldLines("", fieldText);
+
+                embedMessage.addFields(embedFields);
             }
 
             if (hasTimestamp) {
