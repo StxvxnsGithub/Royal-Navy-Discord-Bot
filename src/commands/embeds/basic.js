@@ -17,7 +17,7 @@ const colorMap = new Map(Object.entries(colors));
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("basic-embed")
-        .setDescription("Creates an embed message.")
+        .setDescription("Creates an embed message (title, desc, field).")
         .setDMPermission(false)
         .addChannelOption((option) =>
             option
