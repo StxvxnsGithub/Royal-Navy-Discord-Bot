@@ -125,6 +125,10 @@ module.exports = {
             //     embedMessage.addFields({ name: " ", value: fieldTextLines[0] });
             // }
 
+            for (let i = 0; i < fieldCount; i++) {
+                console.log(1);
+            }
+
             if (hasTimestamp) {
                 embedMessage.setTimestamp();
             }
