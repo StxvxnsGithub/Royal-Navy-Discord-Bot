@@ -113,7 +113,18 @@ module.exports = {
 
             if (title && url) {
                 embedMessage.setTitle(title);
-                embedMessage.setURL(url);
+                if (
+                    url.substring(0, 8) === "https://" ||
+                    url.substring(0, 7) === "http://"
+                ) {
+                    embedMessage.setURL(url);
+                } else {
+                    interaction.editReply(`Invalid URL provided. Try again.`);
+                    console.error(
+                        `\nEmbed Command ERROR: invalid url provided.\n`
+                    );
+                    return;
+                }
             } else if (title) {
                 embedMessage.setTitle(title);
             }
@@ -140,7 +151,7 @@ module.exports = {
         } catch (error) {
             interaction.editReply(`Failed to construct the embed.`);
             console.error(
-                `\nEmbed Command ERROR: embed construction fail. \n${error}`
+                `\nEmbed Command ERROR: embed construction fail. \n${error}\n`
             );
             return;
         }
@@ -153,7 +164,7 @@ module.exports = {
                     `Aborted. Insufficient information provided.`
                 );
                 console.error(
-                    `\nEmbed Command ERROR: message send fail. \n${error}`
+                    `\nEmbed Command ERROR: message send fail. \n${error}\n`
                 );
                 return;
             });
