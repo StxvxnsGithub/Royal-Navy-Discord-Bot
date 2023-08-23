@@ -1,5 +1,5 @@
 module.exports = (fieldTitle, fieldText) => {
-    const fieldTextLines = fieldText.replace(/\\n/g, "\n").split("\n");
+    const fieldTextLines = fieldText.split("\\n");
 
     const embedFields = [];
 
