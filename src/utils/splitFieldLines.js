@@ -12,7 +12,7 @@ module.exports = (fieldTitle, fieldText) => {
 
         return embedFields;
     } catch (error) {
-        console.error(`Split Field Lines ERROR: ${error}`);
+        console.error(`\nSplit Field Lines ERROR: \n${error}`);
         return;
     }
 };

@@ -12,7 +12,7 @@ module.exports = {
 
         if (!command) {
             console.error(
-                `Command Fetch ERROR: ${interaction.commandName} not found.`
+                `\nCommand Fetch ERROR: ${interaction.commandName} not found.`
             );
             return;
         }
@@ -21,7 +21,7 @@ module.exports = {
             await command.execute(interaction);
         } catch (error) {
             console.error(
-                `Command Execution ERROR: ${interaction.commandName}: ${error}`
+                `\nCommand Execution ERROR: ${interaction.commandName}: \n${error}`
             );
 
             if (interaction.replied || interaction.deferred) {

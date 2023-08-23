@@ -19,7 +19,7 @@ module.exports = () => {
             if ("data" in command && "execute" in command) {
                 commands.push(command);
             } else {
-                console.error(`Command ERROR: ${filePath} is missing data.`);
+                console.error(`\nCommand ERROR: ${filePath} is missing data.`);
             }
         }
     }

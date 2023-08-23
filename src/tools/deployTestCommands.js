@@ -23,6 +23,6 @@ const rest = new REST().setToken(token);
             `Deployed ${data.length} application commands for testing.`
         );
     } catch (error) {
-        console.error(`Command Deployment ERROR: ${error}`);
+        console.error(`\nCommand Deployment ERROR: \n${error}`);
     }
 })();
