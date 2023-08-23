@@ -3,6 +3,7 @@ const {
     ChannelType,
     EmbedBuilder,
 } = require("discord.js");
+const splitFieldLines = require("../../utils/splitFieldLines");
 
 const allowedUsers = ["188577632760102912" /*onlyfeds*/];
 const allowedRoles = ["1143582433556574271" /*FDS Test Role*/];
@@ -116,15 +117,17 @@ module.exports = {
         console.log(`Test: ${fieldText}`);
 
         if (fieldTitle && fieldText) {
-            const fieldTextLines = fieldText.replace(/\\n/g, "\n").split("\n");
+            // const fieldTextLines = fieldText.replace(/\\n/g, "\n").split("\n");
 
-            const embedFields = [];
+            // const embedFields = [];
 
-            embedFields.push({ name: fieldTitle, value: fieldTextLines[0] });
-            for (let i = 1; i < fieldTextLines.length; i++) {
-                embedFields.push({ name: " ", value: "\n" });
-                embedFields.push({ name: " ", value: fieldTextLines[i] });
-            }
+            // embedFields.push({ name: fieldTitle, value: fieldTextLines[0] });
+            // for (let i = 1; i < fieldTextLines.length; i++) {
+            //     embedFields.push({ name: " ", value: "\n" });
+            //     embedFields.push({ name: " ", value: fieldTextLines[i] });
+            // }
+
+            const embedFields = splitFieldLines(fieldTitle, fieldText);
 
             console.log(embedFields);
             embedMessage.addFields(embedFields);
