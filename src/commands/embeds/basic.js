@@ -66,6 +66,12 @@ module.exports = {
                 .setName("field-text")
                 .setDescription("Adds text to a field.")
                 .setRequired(false)
+        )
+        .addBooleanOption((option) =>
+            option
+                .setName("timestamp")
+                .setDescription("Adds a timestamp.")
+                .setRequired(false)
         ),
 
     async execute(interaction) {
@@ -95,6 +101,8 @@ module.exports = {
         const desc = interaction.options.getString("desc") ?? "";
         const fieldTitle = interaction.options.getString("field-title") ?? "";
         const fieldText = interaction.options.getString("field-text") ?? "";
+        const hasTimestamp =
+            interaction.options.getBoolean("timestamp") ?? false;
 
         const embedMessage = new EmbedBuilder();
 
@@ -114,28 +122,18 @@ module.exports = {
                 embedMessage.setDescription(desc);
             }
 
-            console.log(fieldText);
-            console.log(`Test: ${fieldText}`);
-
             if (fieldTitle && fieldText) {
-                // const fieldTextLines = fieldText.replace(/\\n/g, "\n").split("\n");
-
-                // const embedFields = [];
-
-                // embedFields.push({ name: fieldTitle, value: fieldTextLines[0] });
-                // for (let i = 1; i < fieldTextLines.length; i++) {
-                //     embedFields.push({ name: " ", value: "\n" });
-                //     embedFields.push({ name: " ", value: fieldTextLines[i] });
-                // }
-
                 const embedFields = splitFieldLines(fieldTitle, fieldText);
 
-                console.log(embedFields);
                 embedMessage.addFields(embedFields);
             } else if (fieldTitle) {
                 embedMessage.addFields({ name: fieldTitle, value: " " });
             } else if (fieldText) {
                 embedMessage.addFields({ name: " ", value: fieldTextLines[0] });
+            }
+
+            if (hasTimestamp) {
+                embedMessage.setTimestamp();
             }
         } catch (error) {
             interaction.editReply(`Failed to construct the embed.`);
