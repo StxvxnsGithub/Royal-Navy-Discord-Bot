@@ -106,7 +106,18 @@ module.exports = {
 
             if (title && url) {
                 embedMessage.setTitle(title);
-                embedMessage.setURL(url);
+                if (
+                    url.substring(0, 8) === "https://" ||
+                    url.substring(0, 7) === "http://"
+                ) {
+                    embedMessage.setURL(url);
+                } else {
+                    interaction.editReply(`Invalid URL provided. Try again.`);
+                    console.error(
+                        `\nEmbed Command ERROR: invalid url provided.\n`
+                    );
+                    return;
+                }
             } else if (title) {
                 embedMessage.setTitle(title);
             }
