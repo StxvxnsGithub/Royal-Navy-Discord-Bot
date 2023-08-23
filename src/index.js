@@ -4,7 +4,13 @@ const getCommands = require("./utils/getCommands");
 const { Client, Collection, Events, GatewayIntentBits } = require("discord.js"); // Requires the necessary discord.js classes
 const { token } = require("../config.json"); // Requires the config.json file storing important data
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+    ],
+});
 
 client.commands = new Collection();
 

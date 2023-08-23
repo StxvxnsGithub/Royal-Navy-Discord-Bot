@@ -14,8 +14,14 @@ module.exports = {
             time: 15000,
         });
 
-        collector.on("collect", (m) => {
-            console.log(`Collected ${m.content}`);
+        collector.on("collect", (message) => {
+            if (
+                !message.author.bot &&
+                message.author.id === interaction.user.id
+            ) {
+                console.log(`Collected ${message.content}`);
+            }
+            collector.stop();
         });
 
         collector.on("end", (collected) => {
