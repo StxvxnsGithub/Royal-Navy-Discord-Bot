@@ -98,43 +98,51 @@ module.exports = {
 
         const embedMessage = new EmbedBuilder();
 
-        if (color) {
-            embedMessage.setColor(colorMap.get(color));
-        }
+        try {
+            if (color) {
+                embedMessage.setColor(colorMap.get(color));
+            }
 
-        if (title && url) {
-            embedMessage.setTitle(title);
-            embedMessage.setURL(url);
-        } else if (title) {
-            embedMessage.setTitle(title);
-        }
+            if (title && url) {
+                embedMessage.setTitle(title);
+                embedMessage.setURL(url);
+            } else if (title) {
+                embedMessage.setTitle(title);
+            }
 
-        if (desc) {
-            embedMessage.setDescription(desc);
-        }
+            if (desc) {
+                embedMessage.setDescription(desc);
+            }
 
-        console.log(fieldText);
-        console.log(`Test: ${fieldText}`);
+            console.log(fieldText);
+            console.log(`Test: ${fieldText}`);
 
-        if (fieldTitle && fieldText) {
-            // const fieldTextLines = fieldText.replace(/\\n/g, "\n").split("\n");
+            if (fieldTitle && fieldText) {
+                // const fieldTextLines = fieldText.replace(/\\n/g, "\n").split("\n");
 
-            // const embedFields = [];
+                // const embedFields = [];
 
-            // embedFields.push({ name: fieldTitle, value: fieldTextLines[0] });
-            // for (let i = 1; i < fieldTextLines.length; i++) {
-            //     embedFields.push({ name: " ", value: "\n" });
-            //     embedFields.push({ name: " ", value: fieldTextLines[i] });
-            // }
+                // embedFields.push({ name: fieldTitle, value: fieldTextLines[0] });
+                // for (let i = 1; i < fieldTextLines.length; i++) {
+                //     embedFields.push({ name: " ", value: "\n" });
+                //     embedFields.push({ name: " ", value: fieldTextLines[i] });
+                // }
 
-            const embedFields = splitFieldLines(fieldTitle, fieldText);
+                const embedFields = splitFieldLines(fieldTitle, fieldText);
 
-            console.log(embedFields);
-            embedMessage.addFields(embedFields);
-        } else if (fieldTitle) {
-            embedMessage.addFields({ name: fieldTitle, value: " " });
-        } else if (fieldText) {
-            embedMessage.addFields({ name: " ", value: fieldTextLines[0] });
+                console.log(embedFields);
+                embedMessage.addFields(embedFields);
+            } else if (fieldTitle) {
+                embedMessage.addFields({ name: fieldTitle, value: " " });
+            } else if (fieldText) {
+                embedMessage.addFields({ name: " ", value: fieldTextLines[0] });
+            }
+        } catch (error) {
+            interaction.editReply(`Failed to construct the embed.`);
+            console.error(
+                `\nEmbed Command ERROR: embed construction fail. \n${error}`
+            );
+            return;
         }
 
         // Sends the completed embed message
@@ -142,10 +150,10 @@ module.exports = {
             .send({ embeds: [embedMessage] })
             .catch((error) => {
                 interaction.editReply(
-                    `Embed ERROR: insufficient information provided.`
+                    `Aborted. Insufficient information provided.`
                 );
                 console.error(
-                    `Embed Command ERROR: message send fail. \n${error}`
+                    `\nEmbed Command ERROR: message send fail. \n${error}`
                 );
                 return;
             });
