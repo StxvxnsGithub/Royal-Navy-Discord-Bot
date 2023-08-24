@@ -154,7 +154,7 @@ module.exports = {
                 embedMessage.addFields(embedFields);
             }
 
-            if (image.url) {
+            if (image && image.url) {
                 const extension = image.url.split(".").pop().toLowerCase();
 
                 if (
@@ -196,12 +196,13 @@ module.exports = {
                 console.error(
                     `\nEmbed Command ERROR: message send fail. \n${error}\n`
                 );
-                return;
             });
 
-        console.log(`Embed Command: message sent successfully.`);
-        await interaction.editReply(
-            `Embed Sent: [View](https://discord.com/channels/${sentEmbed.guild.id}/${sentEmbed.channel.id}/${sentEmbed.id})`
-        );
+        if (sentEmbed) {
+            console.log(`Embed Command: message sent successfully.`);
+            await interaction.editReply(
+                `Embed Sent: [View](https://discord.com/channels/${sentEmbed.guild.id}/${sentEmbed.channel.id}/${sentEmbed.id})`
+            );
+        }
     },
 };
