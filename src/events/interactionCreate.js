@@ -27,7 +27,7 @@ module.exports = {
             if (interaction.replied || interaction.deferred) {
                 await interaction.followUp({
                     content: `An error occured while attempting to execute this command.`,
-                    ephemeral: true,
+                    // ephemeral: true,
                 });
             } else {
                 await interaction.reply({
