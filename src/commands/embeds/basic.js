@@ -119,7 +119,9 @@ module.exports = {
                 ) {
                     embedMessage.setURL(url);
                 } else {
-                    interaction.editReply(`Invalid URL provided. Try again.`);
+                    await interaction.editReply(
+                        `Invalid URL provided. Try again.`
+                    );
                     console.error(
                         `\nEmbed Command ERROR: invalid url provided.\n`
                     );
@@ -140,7 +142,7 @@ module.exports = {
             } else if (fieldTitle) {
                 embedMessage.addFields({ name: fieldTitle, value: " " });
             } else if (fieldText) {
-                const embedFields = splitFieldLines("", fieldText);
+                const embedFields = splitFieldLines(" ", fieldText);
 
                 embedMessage.addFields(embedFields);
             }
@@ -149,7 +151,7 @@ module.exports = {
                 embedMessage.setTimestamp();
             }
         } catch (error) {
-            interaction.editReply(`Failed to construct the embed.`);
+            await interaction.editReply(`Failed to construct the embed.`);
             console.error(
                 `\nEmbed Command ERROR: embed construction fail. \n${error}\n`
             );
@@ -170,7 +172,7 @@ module.exports = {
             });
 
         console.log(`Embed Command: message sent successfully.`);
-        interaction.editReply(
+        await interaction.editReply(
             `Embed Sent: [View](https://discord.com/channels/${sentEmbed.guild.id}/${sentEmbed.channel.id}/${sentEmbed.id})`
         );
     },
