@@ -137,14 +137,9 @@ module.exports = {
             }
 
             if (fieldCount > 0) {
-                const collector = interaction.channel.createMessageCollector({
-                    time: 60000,
-                });
-
                 let fields = [];
 
                 for (let i = 0; i < fieldCount; i++) {
-                    console.log(1);
                     let fieldTitleReceived = false;
                     let fieldTitle = "";
                     let fieldText = "";
@@ -155,7 +150,7 @@ module.exports = {
 
                     const collector =
                         interaction.channel.createMessageCollector({
-                            time: 60000,
+                            time: 1000,
                         });
 
                     collector.on("collect", async (message) => {
@@ -163,7 +158,6 @@ module.exports = {
                             !message.author.bot &&
                             message.author.id === interaction.user.id
                         ) {
-                            console.log(`Collected ${message.content}`);
                             if (!fieldTitleReceived) {
                                 if (message.content.toLowerCase() !== "skip") {
                                     fieldTitle = message.content;
@@ -185,15 +179,20 @@ module.exports = {
                                 }
 
                                 collector.stop();
-                                fields = fields.concat(
-                                    splitFieldLines(fieldTitle, fieldText)
-                                );
                             }
                         }
                     });
 
                     while (!collector.checkEnd()) {
                         await wait(1000);
+                    }
+
+                    if (fieldTitle && fieldText) {
+                        fields = fields.concat(
+                            splitFieldLines(fieldTitle, fieldText)
+                        );
+                    } else {
+                        // Warn of timeout here
                     }
                 }
 
