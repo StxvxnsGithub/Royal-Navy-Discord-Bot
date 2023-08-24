@@ -67,6 +67,12 @@ module.exports = {
                 .setDescription("Adds text to a field.")
                 .setRequired(false)
         )
+        .addAttachmentOption((option) =>
+            option
+                .setName("image")
+                .setDescription("Adds an image.")
+                .setRequired(false)
+        )
         .addBooleanOption((option) =>
             option
                 .setName("timestamp")
@@ -101,6 +107,7 @@ module.exports = {
         const desc = interaction.options.getString("desc") ?? "";
         const fieldTitle = interaction.options.getString("field-title") ?? "";
         const fieldText = interaction.options.getString("field-text") ?? "";
+        const image = interaction.options.getAttachment("image") ?? "";
         const hasTimestamp =
             interaction.options.getBoolean("timestamp") ?? false;
 
@@ -145,6 +152,27 @@ module.exports = {
                 const embedFields = splitFieldLines(" ", fieldText);
 
                 embedMessage.addFields(embedFields);
+            }
+
+            if (image.url) {
+                const extension = image.url.split(".").pop().toLowerCase();
+
+                if (
+                    extension === "png" ||
+                    extension === "jpg" ||
+                    extension === "jpeg" ||
+                    extension === "gif"
+                ) {
+                    embedMessage.setImage(image.url);
+                } else {
+                    await interaction.editReply(
+                        `Unsupported file type provided. Try again.`
+                    );
+                    console.error(
+                        `\nEmbed Command ERROR: Unsupported file type provided.\n`
+                    );
+                    return;
+                }
             }
 
             if (hasTimestamp) {
