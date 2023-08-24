@@ -199,7 +199,7 @@ module.exports = {
             });
 
         if (sentEmbed) {
-            console.log(`Embed Command: message sent successfully.`);
+            console.log(`Embed Command: message send success.`);
             await interaction.editReply(
                 `Embed Sent: [View](https://discord.com/channels/${sentEmbed.guild.id}/${sentEmbed.channel.id}/${sentEmbed.id})`
             );

@@ -3,6 +3,7 @@ const {
     ChannelType,
     EmbedBuilder,
 } = require("discord.js");
+const wait = require("node:timers/promises").setTimeout;
 const splitFieldLines = require("../../utils/splitFieldLines");
 
 const allowedUsers = ["188577632760102912" /*onlyfeds*/];
@@ -112,7 +113,9 @@ module.exports = {
                 ) {
                     embedMessage.setURL(url);
                 } else {
-                    interaction.editReply(`Invalid URL provided. Try again.`);
+                    await interaction.editReply(
+                        `Invalid URL provided. Try again.`
+                    );
                     console.error(
                         `\nEmbed Command ERROR: invalid url provided.\n`
                     );
@@ -136,17 +139,78 @@ module.exports = {
             //     embedMessage.addFields({ name: " ", value: fieldTextLines[0] });
             // }
 
-            for (let i = 0; i < fieldCount; i++) {
-                console.log(1);
+            console.log(`IDK ${fieldCount}`);
+            if (fieldCount > 0) {
+                const collector = interaction.channel.createMessageCollector({
+                    time: 60000,
+                });
+
+                let fields = [];
+
+                for (let i = 0; i < fieldCount; i++) {
+                    console.log(1);
+                    let fieldTitleReceived = false;
+                    let fieldTitle = "";
+                    let fieldText = "";
+
+                    await interaction.followUp(
+                        `Provide the title for field ${i + 1}. (skip)`
+                    );
+
+                    const collector =
+                        interaction.channel.createMessageCollector({
+                            time: 60000,
+                        });
+
+                    collector.on("collect", async (message) => {
+                        if (
+                            !message.author.bot &&
+                            message.author.id === interaction.user.id
+                        ) {
+                            console.log(`Collected ${message.content}`);
+                            if (!fieldTitleReceived) {
+                                if (message.content.toLowerCase() !== "skip") {
+                                    fieldTitle = message.content;
+                                } else {
+                                    fieldTitle = " ";
+                                }
+
+                                fieldTitleReceived = true;
+                                await interaction.followUp(
+                                    `Provide the text for field ${
+                                        i + 1
+                                    }. (skip)`
+                                );
+                            } else {
+                                if (message.content.toLowerCase() !== "skip") {
+                                    fieldText = message.content;
+                                } else {
+                                    fieldText = " ";
+                                }
+
+                                collector.stop();
+                                fields = fields.concat(
+                                    splitFieldLines(fieldTitle, fieldText)
+                                );
+                            }
+                        }
+                    });
+
+                    while (!collector.checkEnd()) {
+                        await wait(1000);
+                    }
+                }
+
+                embedMessage.addFields(fields);
             }
 
             if (hasTimestamp) {
                 embedMessage.setTimestamp();
             }
         } catch (error) {
-            interaction.editReply(`Failed to construct the embed.`);
+            await interaction.editReply(`Failed to construct the embed.`);
             console.error(
-                `\nEmbed Command ERROR: embed construction fail. \n${error}`
+                `\nEmbed Command ERROR: embed construction fail. \n${error}\n`
             );
             return;
         }
@@ -159,14 +223,15 @@ module.exports = {
                     `Aborted. Insufficient information provided.`
                 );
                 console.error(
-                    `\nEmbed Command ERROR: message send fail. \n${error}`
+                    `\nEmbed Command ERROR: message send fail. \n${error}\n`
                 );
-                return;
             });
 
-        console.log(`Embed Command: message sent successfully.`);
-        interaction.editReply(
-            `Embed Sent: [View](https://discord.com/channels/${sentEmbed.guild.id}/${sentEmbed.channel.id}/${sentEmbed.id})`
-        );
+        if (sentEmbed) {
+            console.log(`Embed Command: message send success.`);
+            await interaction.editReply(
+                `Embed Sent: [View](https://discord.com/channels/${sentEmbed.guild.id}/${sentEmbed.channel.id}/${sentEmbed.id})`
+            );
+        }
     },
 };
