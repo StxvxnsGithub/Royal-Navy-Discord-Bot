@@ -62,6 +62,12 @@ module.exports = {
                 .setDescription("Number of fields.")
                 .setRequired(false)
         )
+        .addAttachmentOption((option) =>
+            option
+                .setName("image")
+                .setDescription("Adds an image.")
+                .setRequired(false)
+        )
         .addBooleanOption((option) =>
             option
                 .setName("timestamp")
@@ -95,6 +101,7 @@ module.exports = {
         const url = interaction.options.getString("url") ?? "";
         const desc = interaction.options.getString("desc") ?? "";
         const fieldCount = interaction.options.getInteger("fields") ?? 0;
+        const image = interaction.options.getAttachment("image") ?? "";
         const hasTimestamp =
             interaction.options.getBoolean("timestamp") ?? false;
 
@@ -129,17 +136,6 @@ module.exports = {
                 embedMessage.setDescription(desc);
             }
 
-            // if (fieldTitle && fieldText) {
-            //     const embedFields = splitFieldLines(fieldTitle, fieldText);
-
-            //     embedMessage.addFields(embedFields);
-            // } else if (fieldTitle) {
-            //     embedMessage.addFields({ name: fieldTitle, value: " " });
-            // } else if (fieldText) {
-            //     embedMessage.addFields({ name: " ", value: fieldTextLines[0] });
-            // }
-
-            console.log(`IDK ${fieldCount}`);
             if (fieldCount > 0) {
                 const collector = interaction.channel.createMessageCollector({
                     time: 60000,
@@ -202,6 +198,27 @@ module.exports = {
                 }
 
                 embedMessage.addFields(fields);
+            }
+
+            if (image && image.url) {
+                const extension = image.url.split(".").pop().toLowerCase();
+
+                if (
+                    extension === "png" ||
+                    extension === "jpg" ||
+                    extension === "jpeg" ||
+                    extension === "gif"
+                ) {
+                    embedMessage.setImage(image.url);
+                } else {
+                    await interaction.editReply(
+                        `Unsupported file type provided. Try again.`
+                    );
+                    console.error(
+                        `\nEmbed Command ERROR: Unsupported file type provided.\n`
+                    );
+                    return;
+                }
             }
 
             if (hasTimestamp) {
