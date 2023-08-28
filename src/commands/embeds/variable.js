@@ -145,12 +145,14 @@ module.exports = {
                     let fieldText = "";
 
                     await interaction.followUp(
-                        `Provide the title for field ${i + 1}. (skip)`
+                        `<@${
+                            interaction.user.id
+                        }> Provide the title for field ${i + 1}. (skip)`
                     );
 
                     const collector =
                         interaction.channel.createMessageCollector({
-                            time: 1000,
+                            time: 60000,
                         });
 
                     collector.on("collect", async (message) => {
@@ -167,7 +169,9 @@ module.exports = {
 
                                 fieldTitleReceived = true;
                                 await interaction.followUp(
-                                    `Provide the text for field ${
+                                    `<@${
+                                        interaction.user.id
+                                    }> Provide the text for field ${
                                         i + 1
                                     }. (skip)`
                                 );
