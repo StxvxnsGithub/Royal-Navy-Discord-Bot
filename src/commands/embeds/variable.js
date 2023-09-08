@@ -195,8 +195,6 @@ module.exports = {
                         fields = fields.concat(
                             splitFieldLines(fieldTitle, fieldText)
                         );
-                    } else {
-                        // Warn of timeout here
                     }
                 }
 
