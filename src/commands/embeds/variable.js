@@ -202,7 +202,12 @@ module.exports = {
             }
 
             if (image && image.url) {
-                const extension = image.url.split(".").pop().toLowerCase();
+                const extension = image.url
+                    .split(".")
+                    .pop()
+                    .split("?")
+                    .shift()
+                    .toLowerCase();
 
                 if (
                     extension === "png" ||
