@@ -8,4 +8,4 @@
 
 ## Work In Progress
 
-I am currently working on this.
+I intend to develop more features for this bot.
