@@ -8,7 +8,7 @@
 
 ## About
 
-Created using Discord.js and Visual Studio Code.
+Created using discord.js and Visual Studio Code.
 
 ## Work In Progress
 
