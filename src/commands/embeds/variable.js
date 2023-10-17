@@ -6,7 +6,7 @@ const {
 const wait = require("node:timers/promises").setTimeout;
 const splitFieldLines = require("../../utils/splitFieldLines");
 
-const allowedUsers = ["188577632760102912" /*onlyfeds*/];
+const allowedUsers = ["188577632760102912" /*onlyfeds User ID*/];
 const allowedRoles = ["1143582433556574271" /*FDS Test Role*/];
 const colors = {
     navyBlue: 0x040c43,
