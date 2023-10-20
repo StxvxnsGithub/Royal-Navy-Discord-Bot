@@ -1,3 +1,5 @@
+// An executable js file used to deploy commands globally to all of the bot's servers
+
 const getCommands = require("../utils/getCommands");
 const { REST, Routes } = require("discord.js"); // Requires the necessary discord.js classes
 const { token, clientID, testGuildID } = require("../../config.json"); // Requires the config.json file storing important data
