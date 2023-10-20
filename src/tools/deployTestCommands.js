@@ -1,3 +1,5 @@
+// An executable js file used to deploy commands to the test server
+
 const getCommands = require("../utils/getCommands");
 const { REST, Routes } = require("discord.js"); // Requires the necessary discord.js classes
 const { token, clientID, testGuildID } = require("../../config.json"); // Requires the config.json file storing important data
