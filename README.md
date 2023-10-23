@@ -13,6 +13,7 @@ Created using discord.js and Visual Studio Code.
 ## Work In Progress
 
 Planned Features:
+
 <ul>
   <li>Command to post preset embed messages</li>
   <ul>
@@ -20,5 +21,6 @@ Planned Features:
     <li>Message for event announcement</li>
     <li>Message for information/rules message</li>
   </ul>
+  <li>Delete the messages relevant to a command after command completion</li>
   <li>Utilise Google Sheets API to create a command to allow users to fetch data from a spreadsheet</li>
 </ul>
