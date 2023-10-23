@@ -138,6 +138,9 @@ module.exports = {
 
             if (fieldCount > 0) {
                 let fields = [];
+                await interaction.editReply(
+                    `Provide the requested content for the text fields.`
+                );
 
                 for (let i = 0; i < fieldCount; i++) {
                     let fieldTitleReceived = false;
