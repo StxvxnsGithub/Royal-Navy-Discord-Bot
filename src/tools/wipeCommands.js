@@ -1,3 +1,5 @@
+// An executable js file used to wipe the list of application commands visible to the user.
+
 const { REST, Routes } = require("discord.js");
 const { token, clientID, testGuildID } = require("../../config.json");
 
