@@ -1,3 +1,4 @@
+// A handler for all 'interactionCreate' events.
 // interactionCreate event is triggered when the user attempts to run an application (/) command.
 
 const { Events } = require("discord.js");
