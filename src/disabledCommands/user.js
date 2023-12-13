@@ -1,3 +1,5 @@
+// Just a test command that returns the username of the user who ran the command and their join date.
+
 const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {

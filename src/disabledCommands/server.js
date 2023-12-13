@@ -1,3 +1,5 @@
+// Just a test command that returns the name of the guild (server).
+
 const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
