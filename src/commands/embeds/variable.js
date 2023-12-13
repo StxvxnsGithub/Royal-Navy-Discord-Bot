@@ -155,7 +155,7 @@ module.exports = {
 
                     const collector =
                         interaction.channel.createMessageCollector({
-                            time: 60000,
+                            time: 180000,
                         });
 
                     collector.on("collect", async (message) => {
